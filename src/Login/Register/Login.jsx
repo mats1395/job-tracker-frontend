@@ -225,15 +225,11 @@ function Login({ setUser }) {
         { withCredentials: true }
       );
 
-      if (result.data === "Success") {
-        const me = await axios.get(`${API}/auth/me`, {
-          withCredentials: true,
-        });
-
-        localStorage.setItem("user", JSON.stringify(me.data));
-        setUser(me.data);
-        navigate("/home");
-      } else {
+      if (result.data?.email) {
+    localStorage.setItem("user", JSON.stringify(result.data));
+    setUser(result.data);
+    navigate("/home");
+   } else {
         alert(result.data);
       }
     } catch (err) {
